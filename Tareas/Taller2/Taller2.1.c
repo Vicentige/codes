@@ -25,7 +25,7 @@ int main(){
             if (m_ing < 0 || m_ing > 59){
                 printf("\nLos minutos ingresados son incorrectos\n");
             }
-        } while (m_ing < 0 || m_ing > 59);
+        } while (m_ing < 0 || m_ing > 59); 
 
         // Ingreso hora de salida
     
