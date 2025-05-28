@@ -96,8 +96,6 @@ int main(){
         printf("Desea ingresar otro registro (1=Si, 0=No): ");
         scanf("%d", &opcion);
     }
-
-
     // Mostrar todos los registros
     printf("\nRegistros ingresados:\n");
     printf("           |--------------------------|-----------------|\n");
@@ -115,6 +113,4 @@ int main(){
         printf("           |El ingreso mensual es:         $%0.2f       |\n",Ingreso_mensual);
         printf("           |--------------------------------------------|\n");
     return 0;
-
-    
 }
