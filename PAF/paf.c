@@ -1,7 +1,6 @@
 /*
 *autores: Gonzalo Fuenzalida Pérez,Vicente González
-*
-
+*Seccion 2 INF
 */
 #include <stdio.h>
 #include <string.h>
@@ -15,7 +14,7 @@ int main(){
     char original[100];
     char alfabeto[100];
     char codificado[100];
-    int N = 0;
+    int N;
 
     lee_original(original, &N);
     inicializa_alfabeto(alfabeto);
@@ -24,31 +23,34 @@ int main(){
     return 0;
 }
 
+
 void lee_original(char *original, int *n){
     int i = 0;
 
     FILE *file = fopen("original.txt", "r");
     fgets(original, 100, file);
     fclose(file);
-    //printf("Mensaje original:%s\n", original);
 
-    while (original[i] >= '0' && original[i] <= '9') { 
+    printf("\nMensaje ORIGINAL: ");
+    for (i = 0; i < (strlen(original)); i++) {
+        printf("%c", original[i]);
+    }
+    while (original[i] >= '0' && original[i] <= '9') { //Guarda en una variable n, el numero que hay antes del # en el array original[]
         *n = (*n) * 10 + (original[i] - '0');
         i++;
     }
-    printf("Numero n: %d\n", *n);
+    printf("\nNumero n: %d\n", *n);
 }
 
 void inicializa_alfabeto(char *alfabeto){
     int i;
-    for (i = 0; i < 26; i++) {
+
+    for (i = 0; i < 26; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
         alfabeto[i] = 'A' + i;
-        //printf("Numero: %d %c \n", i, alfabeto[i]);
     }
     alfabeto[26] = ' ';
     for (i = 27; i < 37; i++) {
         alfabeto[i] = '0' + (i - 27);
-        //printf("Numero: %d %c \n", i, alfabeto[i]);
     }
 
     alfabeto[37] = '!';
@@ -64,25 +66,37 @@ void inicializa_alfabeto(char *alfabeto){
 
 }
 
+
 void codificar(char *original, char *codificado, char *alfabeto, int n){
+    void primera_etapa(char *, char *, int);
+    void segunda_etapa(char *, char *, int);
+    int i = 0;
+
+    for (i = 0; i < (strlen(original));i++)codificado[i] = original[i];
+    
+    primera_etapa(codificado, alfabeto, n);
+    segunda_etapa(codificado, alfabeto, n);
+
+
+}
+
+void primera_etapa(char *codificado, char *alfabeto, int n){
     int i = 0, j, z, k = n, contador = 0;
 
-    while (original[i] >= '0' && original[i] <= '9') { 
+    while (codificado[i] >= '0' && codificado[i] <= '9') { //Cuenta las posiciones que usa el numero n dentro del array
         contador++;
         i++;
     }
 
-    for (i = 0; i<= contador + 1;i++)codificado[i] = original[i];
-
-    
     if (n > 47) {
         k = n % 47;        
     }
     
+
     //primera codificacion
-    for (i = contador + 1; i < (strlen(original) + 2); i++) {
+    for (i = contador + 1; i < (strlen(codificado)); i++) {
         for (j = 0; j < (strlen(alfabeto)); j++) {
-            if (original[i] == alfabeto[j]) {
+            if (codificado[i] == alfabeto[j]) {
                 z = j - k;
                 while (z < 0) {
                     z = z + 47;
@@ -93,20 +107,23 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
     }
 
     printf("Mensaje codificado: ");
-    /*
-    i =0;
-    while (original[i] >= '0' && original[i] <= '9') { 
-        printf("%c",original[i]);
-        i++;
-    }
-    codificado[contador + 1] = '#';
-    */
     for (i = 0; i < (strlen(codificado)); i++) {
         printf("%c", codificado[i]);
     }
+}
 
+void segunda_etapa(char *codificado, char *alfabeto, int n){
+    int i = 0, j, z, k = n, contador = 0;
+
+    while (codificado[i] >= '0' && codificado[i] <= '9') { //Cuenta las posiciones que usa el numero n dentro del array
+        contador++;
+        i++;
+    }
+    if (n > 47) {
+        k = n % 47;        
+    }
     //segunda codificacion
-    for (i = contador + 1; i < (strlen(original) + 2); i++) {
+    for (i = contador + 1; i < (strlen(codificado) + 2); i++) {
         for (j = 0; j < 47; j++) {
             if (codificado[i] == alfabeto[j] && (j % 2 == 0)) {
                 z = j - k;
@@ -118,19 +135,9 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
             }
         }
     }
-    
+
     printf("\nMensaje codificado segunda vez: ");
-    
-    
-  /*  i =0;
-    while (original[i] >= '0' && original[i] <= '9') { 
-        printf("%c",original[i]);
-        i++;
-    }
-    codificado[contador + 1] = '#';
-    */
     for (i = 0; i < (strlen(codificado)); i++) {
         printf("%c", codificado[i]);
     }
 }
-//7A-;G!H!E!
