@@ -36,7 +36,6 @@ void lee_original(char *original, int *n){
         *n = (*n) * 10 + (original[i] - '0');
         i++;
     }
-
     printf("Numero n: %d\n", *n);
 }
 
@@ -66,19 +65,20 @@ void inicializa_alfabeto(char *alfabeto){
 }
 
 void codificar(char *original, char *codificado, char *alfabeto, int n){
-
-
     int i = 0, j, z, k = n, contador = 0;
 
     while (original[i] >= '0' && original[i] <= '9') { 
         contador++;
         i++;
     }
-    if (n > 47) {
-        k = n % 47;
-        
-    }
 
+    for (i = 0; i<= contador + 1;i++)codificado[i] = original[i];
+
+    
+    if (n > 47) {
+        k = n % 47;        
+    }
+    
     //primera codificacion
     for (i = contador + 1; i < (strlen(original) + 2); i++) {
         for (j = 0; j < (strlen(alfabeto)); j++) {
@@ -91,11 +91,17 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
             }
         }
     }
+
     printf("Mensaje codificado: ");
-    codificado[0] = n;
-    codificado[1] = '#';
-    printf("%d", n);
-    for (i = 1; i < (strlen(original)); i++) {
+    /*
+    i =0;
+    while (original[i] >= '0' && original[i] <= '9') { 
+        printf("%c",original[i]);
+        i++;
+    }
+    codificado[contador + 1] = '#';
+    */
+    for (i = 0; i < (strlen(codificado)); i++) {
         printf("%c", codificado[i]);
     }
 
@@ -114,10 +120,17 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
     }
     
     printf("\nMensaje codificado segunda vez: ");
-    printf("%d", n);
-        for (i = 1; i < (strlen(original)); i++) {
+    
+    
+  /*  i =0;
+    while (original[i] >= '0' && original[i] <= '9') { 
+        printf("%c",original[i]);
+        i++;
+    }
+    codificado[contador + 1] = '#';
+    */
+    for (i = 0; i < (strlen(codificado)); i++) {
         printf("%c", codificado[i]);
     }
-
-    
 }
+//7A-;G!H!E!
