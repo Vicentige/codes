@@ -14,7 +14,7 @@ int main(){
     char original[100];
     char alfabeto[100];
     char codificado[100];
-    int N = 0;
+    int N;
 
     lee_original(original, &N);
     inicializa_alfabeto(alfabeto);
@@ -70,6 +70,7 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
     int i = 0;
     void primera_etapa(char *, char *, int);
     void segunda_etapa(char *, char *, int);
+
     
     strcpy(codificado, original);
     
@@ -79,7 +80,7 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
 
 }
 
-void primera_etapa(char *codificado, char *alfabeto, int n){
+void primera_etapa(char *codificado, char *alfabeto, int n){//primera codificacion
     int i = 0, j, z, k = n, contador = 0;
 
     while (codificado[i] >= '0' && codificado[i] <= '9') { //Cuenta las posiciones que usa el numero n dentro del array
@@ -92,7 +93,7 @@ void primera_etapa(char *codificado, char *alfabeto, int n){
     }
     
 
-    //primera codificacion
+    
     for (i = contador + 1; i < strlen(codificado); i++) {
         for (j = 0; j < (strlen(alfabeto)); j++) {
             if (codificado[i] == alfabeto[j]) {
@@ -112,7 +113,7 @@ void primera_etapa(char *codificado, char *alfabeto, int n){
     }
 }
 
-void segunda_etapa(char *codificado, char *alfabeto, int n){
+void segunda_etapa(char *codificado, char *alfabeto, int n){//segunda codificacion
     int i = 0, j, z, k = n, contador = 0;
 
     while (codificado[i] >= '0' && codificado[i] <= '9') { //Cuenta las posiciones que usa el numero n dentro del array
@@ -122,7 +123,7 @@ void segunda_etapa(char *codificado, char *alfabeto, int n){
     if (n > 47) {
         k = n % 47;        
     }
-    //segunda codificacion
+    
     for (i = contador + 1; i < strlen(codificado) + 2; i++) {
         for (j = 0; j < 47; j += 2) {
             if (codificado[i] == alfabeto[j] && (j % 2 == 0)) {
