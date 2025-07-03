@@ -9,8 +9,13 @@ int main(){
         printf("Error al abrir el archivo.\n");    
     }
     while(i < 10){
-        if (fscanf(archivo, "%d",))
-
+        if (fscanf(archivo, "%d",&num) == 1){
+            numeros[i] = num;
+            i++;
+        }
+        
     }
-
+    
+    fclose(archivo);
+    return 0;
 }
