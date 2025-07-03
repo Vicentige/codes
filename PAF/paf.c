@@ -26,8 +26,9 @@ void lee_original(char *original, int *n){
     FILE *file = fopen("original.txt", "r");
     fgets(original, 100, file);
     fclose(file);
+    strupr(original);
     //printf("Mensaje original:%s\n", original);
-
+    
     while (original[i] >= '0' && original[i] <= '9') { 
         *n = (*n) * 10 + (original[i] - '0');
         i++;
@@ -38,11 +39,14 @@ void lee_original(char *original, int *n){
 
 void inicializa_alfabeto(char *alfabeto){
     int i;
+    
     for (i = 0; i < 26; i++) {
         alfabeto[i] = 'A' + i;
         //printf("Numero: %d %c \n", i, alfabeto[i]);
     }
+    
     alfabeto[26] = ' ';
+    
     for (i = 27; i < 37; i++) {
         alfabeto[i] = '0' + (i - 27);
         //printf("Numero: %d %c \n", i, alfabeto[i]);
@@ -89,38 +93,19 @@ void codificar(char *original, char *codificado, char *alfabeto, int n){
                 if(j % 2 == 0){
                     z = j - n;
                     if (z < 0) {
-                    z = z + 47;
+                        z = z + 47;
                     }
                     codificado[i] = alfabeto[z];
 
-                }
-                
-                
+                }                
             }
         }
     }
 
-
-    
-
-
-
-    /*
-    for (i = 2; i < (strlen(original) + 2); i++) {
-        if ((codificado[i]) % 2 == 0) {
-            z = (codificado[i]) - n;
-            if (z < 0) {
-                z = z + 47;
-            }
-            codificado[i] = alfabeto[z];
-        
-        }
-
-    }*/
     printf("\nMensaje codificado segunda vez: ");
         for (i = 0; i < (strlen(original)); i++) {
         printf("%c", codificado[i]);
     }
 
-    
+
 }
