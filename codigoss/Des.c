@@ -8,8 +8,8 @@
 void lee_original(char *, int *);
 void inicializa_alfabeto(char *);
 void codificar(char *, char *, char *, int);
-void primera_etapa(char *, char *, int);
 void segunda_etapa(char *, char *, int);
+void primera_etapa(char *, char *, int);
 void graba_mensaje(char *);
 
 
@@ -28,52 +28,61 @@ int main(){
 void lee_original(char *original, int *n){
     int i = 0;
     *n = 0;
-    FILE *file = fopen("original.txt", "r");
+    FILE *file = fopen("codificado.txt", "r");
     fgets(original, 100, file);
     
     fclose(file);
 
     original[strcspn(original, "\n")] = '\0';
-    //printf("Mensaje original:%s\n", original);
 
     while (original[i] >= '0' && original[i] <= '9') { 
         *n = (*n) * 10 + (original[i] - '0');
         i++;
     }
 
+    
+
     printf("Numero n: %d\n", *n);
 }
 
 void inicializa_alfabeto(char *alfabeto){
-    int i;   
-
-    for (i = 0; i < 26; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
-        alfabeto[i] = 'A' + i;
+    int i, k = 0;   
+    alfabeto[0] = 'a';
+    for (i = 1; i < 27; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
+        alfabeto[i] = 'A' + k;
+        k++;
     }
-    alfabeto[26] = ' ';
-    for (i = 27; i < 37; i++) {
-        alfabeto[i] = '0' + (i - 27);
+    k++;
+    alfabeto[27] = ' ';
+    for (i = 28; i < 38; i++) {
+        alfabeto[i] = '0' + (k - 27);
+        k++;
     }
 
-    alfabeto[37] = '!';
-    alfabeto[38] = ',';
-    alfabeto[39] = '.';
-    alfabeto[40] = ':';
-    alfabeto[41] = ';';
-    alfabeto[42] = '?';
-    alfabeto[43] = '-';
-    alfabeto[44] = '+';
-    alfabeto[45] = '*';
-    alfabeto[46] = '/';
-    alfabeto[47] = '\0';
+    alfabeto[38] = '!';
+    alfabeto[39] = ',';
+    alfabeto[40] = '.';
+    alfabeto[41] = ':';
+    alfabeto[42] = ';';
+    alfabeto[43] = '?';
+    alfabeto[44] = '-';
+    alfabeto[45] = '+';
+    alfabeto[46] = '*';
+    alfabeto[47] = '/';
+    alfabeto[48] = '\0';
+
+
+    /*printf("\nAlfabeto:");
+    for (i = 0; i < 48; i++) { //Imprime el alfabeto
+        printf("%c", alfabeto[i]);
+    }*/
 }
 
 void codificar(char *original, char *codificado, char *alfabeto, int n){
     int i = 0, contador = 0;
     strcpy(codificado, original);
-    primera_etapa(codificado, original, n);
     segunda_etapa(codificado, original, n);
-
+    primera_etapa(codificado, original, n);
 
 }
 //primera codificacion
@@ -85,25 +94,23 @@ void primera_etapa(char *codificado, char *original, int n){
         contador++;
         i++;
     }
-
     if (n > 47){
         k = n % 47;        
     }
         
     for (i = contador + 1; i < strlen(original); i++){
-        for (j = 0; j < (strlen(alfabeto)); j++){
-            if (original[i] == alfabeto[j]){
-                z = j - k;
-                if(z < 0) {
-                    z = z + 47;
+        for (j = 1; j < (strlen(alfabeto)); j++){
+            if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
+                z = j + k;
+                if (z > 47) {
+                    z = z - 47;
                 }
                 codificado[i] = alfabeto[z];
                 break;
             }
         }
     }
-
-    printf("Mensaje codificado: ");
+    printf("\nMensaje descodificado: ");
     for (i = 0; i < (strlen(codificado)); i++){
         printf("%c", codificado[i]);
     }
@@ -123,11 +130,11 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
     }
     
     for (i = contador + 1; i < strlen(codificado) + 2; i++){
-        for (j = 0; j < 47; j += 2){
-            if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
-                z = j - k;
-                if (z < 0){
-                    z = z + 47;
+        for (j = 1; j < 48; j ++){
+            if (original[i] == alfabeto[j]){
+                z = j + k;
+                if (z > 47){
+                    z = z - 47;
                 }
                 codificado[i] = alfabeto[z];
                 break;
@@ -135,14 +142,14 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
         }
     }
 
-    printf("\nMensaje codificado segunda vez: ");
+    printf("\nMensaje descodificado segunda vez: ");
     for (i = 0; i < (strlen(codificado)); i++){
         printf("%c", codificado[i]);
     }
 }
 
 void graba_mensaje(char *codificado){
-    FILE *file = fopen("codificado.txt", "w");
+    FILE *file = fopen("descodificado.txt", "w");
     if (file == NULL){
         printf("Error al abrir el archivo para escribir.\n");
     }

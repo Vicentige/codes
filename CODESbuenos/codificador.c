@@ -45,27 +45,32 @@ void lee_original(char *original, int *n){
 }
 
 void inicializa_alfabeto(char *alfabeto){
-    int i;   
+    int i, k = 0;   
 
-    for (i = 0; i < 26; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
-        alfabeto[i] = 'A' + i;
+    for (i = 1; i < 27; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
+        alfabeto[i] = 'A' + k;
+        k++;
     }
-    alfabeto[26] = ' ';
-    for (i = 27; i < 37; i++) {
-        alfabeto[i] = '0' + (i - 27);
+    k++;
+    alfabeto[27] = ' ';
+    for (i = 28; i < 38; i++) {
+        alfabeto[i] = '0' + (k - 27);
+        k++;
     }
 
-    alfabeto[37] = '!';
-    alfabeto[38] = ',';
-    alfabeto[39] = '.';
-    alfabeto[40] = ':';
-    alfabeto[41] = ';';
-    alfabeto[42] = '?';
-    alfabeto[43] = '-';
-    alfabeto[44] = '+';
-    alfabeto[45] = '*';
-    alfabeto[46] = '/';
-    alfabeto[47] = '\0';
+
+   //alfabeto[37] = '9'; //Agrega algunos simbolos al alfabeto
+    alfabeto[38] = '!';
+    alfabeto[39] = ',';
+    alfabeto[40] = '.';
+    alfabeto[41] = ':';
+    alfabeto[42] = ';';
+    alfabeto[43] = '?';
+    alfabeto[44] = '-';
+    alfabeto[45] = '+';
+    alfabeto[46] = '*';
+    alfabeto[47] = '/';
+    alfabeto[48] = '\0';
 }
 
 void codificar(char *original, char *codificado, char *alfabeto, int n){
@@ -94,8 +99,8 @@ void primera_etapa(char *codificado, char *original, int n){
         for (j = 0; j < (strlen(alfabeto)); j++){
             if (original[i] == alfabeto[j]){
                 z = j - k;
-                if(z < 0) {
-                    z = z + 47;
+                while (z < 1) {
+                    z = z + 48;
                 }
                 codificado[i] = alfabeto[z];
                 break;
@@ -123,11 +128,11 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
     }
     
     for (i = contador + 1; i < strlen(codificado) + 2; i++){
-        for (j = 0; j < 47; j += 2){
+        for (j = 1; j < 48; j ++){
             if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
                 z = j - k;
-                if (z < 0){
-                    z = z + 47;
+                if (z < 1){
+                    z = z + 48;
                 }
                 codificado[i] = alfabeto[z];
                 break;
