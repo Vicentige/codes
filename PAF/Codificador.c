@@ -124,7 +124,7 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
     
     for (i = contador + 1; i < strlen(codificado) + 2; i++){
         for (j = 0; j < 47; j += 2){
-            if (original[i] == alfabeto[j] && (j % 2 == 0)){
+            if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
                 z = j - k;
                 if (z < 0){
                     z = z + 47;
