@@ -28,7 +28,7 @@ int main(){
 void lee_original(char *original, int *n){
     int i = 0;
     *n = 0;
-    FILE *file = fopen("original.txt", "r");
+    FILE *file = fopen("codificado.txt", "r");
     fgets(original, 100, file);
     
     fclose(file);
@@ -92,9 +92,9 @@ void primera_etapa(char *codificado, char *original, int n){
     for (i = contador + 1; i < strlen(original); i++){
         for (j = 0; j < (strlen(alfabeto)); j++){
             if (original[i] == alfabeto[j]){
-                z = j - k;
-                if(z < 0) {
-                    z = z + 47;
+                z = j + k;
+                if(z > 46) {
+                    z = z - 46;
                 }
                 codificado[i] = alfabeto[z];
                 break;
@@ -124,9 +124,9 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
     for (i = contador + 1; i < strlen(codificado); i++) {
         for (j = 0; j < 47; j++) {
             if (codificado[i] == alfabeto[j]) {
-                z = j - k;
+                z = j + k;
                 if (z > 46) {
-                    z = z + 47;
+                    z = z - 46;
                 }
                 codificado[i] = alfabeto[z];
                 break;
