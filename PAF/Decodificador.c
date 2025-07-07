@@ -71,46 +71,12 @@ void inicializa_alfabeto(char *alfabeto){
 void codificar(char *original, char *codificado, char *alfabeto, int n){
     int i = 0, contador = 0;
     strcpy(codificado, original);
-    primera_etapa(codificado, original, n);
     segunda_etapa(codificado, original, n);
-    
+    primera_etapa(codificado, original, n);
 }
 
-//primera etapa de decodificación
+//primera codificacion
 void primera_etapa(char *codificado, char *original, int n){
-    int i = 0, j, z, k = n, contador = 0;
-    char alfabeto[100];
-    inicializa_alfabeto(alfabeto);
-
-    while (original[i] >= '0' && original[i] <= '9'){ //Cuenta las posiciones que usa el numero n dentro del array
-        contador++;
-        i++;
-    }
-
-    if (n > 47) {
-        k = n % 47;        
-    }
-    
-    for (i = contador + 1; i < strlen(codificado) + 2; i++){
-        for (j = 0; j < 47; j += 2){
-            if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
-                z = j - k;
-                if (z < 0){
-                    z = z + 47;
-                }
-                codificado[i] = alfabeto[z];
-                break;
-            }
-        }
-    }
-
-    printf("\nMensaje codificado segunda vez: ");
-    for (i = 0; i < (strlen(codificado)); i++){
-        printf("%c", codificado[i]);
-    }
-}
-//Segunda decodificación
-void segunda_etapa(char *codificado, char *original, int n){
     int i = 0, j, z, k = n, contador = 0;
     char alfabeto[100];
     inicializa_alfabeto(alfabeto);
@@ -136,14 +102,46 @@ void segunda_etapa(char *codificado, char *original, int n){
         }
     }
 
-    printf("Mensaje codificado: ");
+    printf("\nMensaje codificado: ");
+    for (i = 0; i < (strlen(codificado)); i++){
+        printf("%c", codificado[i]);
+    }
+}
+
+void segunda_etapa(char *codificado, char *original, int n){//segunda codificacion
+    int i = 0, j, z, k = n, contador = 0;
+    char alfabeto[100];
+    inicializa_alfabeto(alfabeto);
+
+    while (original[i] >= '0' && original[i] <= '9'){ //Cuenta las posiciones que usa el numero n dentro del array
+        contador++;
+        i++;
+    }
+    if (n > 47) {
+        k = n % 47;        
+    }
+    
+    for (i = contador + 1; i < strlen(codificado); i++) {
+        for (j = 0; j < 47; j++) {
+            if (codificado[i] == alfabeto[j]) {
+                z = j - k;
+                if (z > 46) {
+                    z = z + 47;
+                }
+                codificado[i] = alfabeto[z];
+                break;
+            }
+        }
+}
+
+    printf("\nMensaje descodificado segunda vez:");
     for (i = 0; i < (strlen(codificado)); i++){
         printf("%c", codificado[i]);
     }
 }
 
 void graba_mensaje(char *codificado){
-    FILE *file = fopen("decodificado.txt", "w");
+    FILE *file = fopen("descodificado.txt", "w");
     if (file == NULL){
         printf("Error al abrir el archivo para escribir.\n");
     }

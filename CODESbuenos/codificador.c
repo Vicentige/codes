@@ -46,7 +46,7 @@ void lee_original(char *original, int *n){
 
 void inicializa_alfabeto(char *alfabeto){
     int i, k = 0;   
-
+    alfabeto[0] = 'a'; 
     for (i = 1; i < 27; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
         alfabeto[i] = 'A' + k;
         k++;
@@ -74,7 +74,7 @@ void inicializa_alfabeto(char *alfabeto){
 }
 
 void codificar(char *original, char *codificado, char *alfabeto, int n){
-    int i = 0, contador = 0;
+    
     strcpy(codificado, original);
     primera_etapa(codificado, original, n);
     segunda_etapa(codificado, original, n);
@@ -96,11 +96,11 @@ void primera_etapa(char *codificado, char *original, int n){
     }
         
     for (i = contador + 1; i < strlen(original); i++){
-        for (j = 0; j < (strlen(alfabeto)); j++){
+        for (j = 1; j < (strlen(alfabeto)); j++){
             if (original[i] == alfabeto[j]){
                 z = j - k;
                 while (z < 1) {
-                    z = z + 48;
+                    z = z + 47;
                 }
                 codificado[i] = alfabeto[z];
                 break;
@@ -132,7 +132,7 @@ void segunda_etapa(char *codificado, char *original, int n){//segunda codificaci
             if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
                 z = j - k;
                 if (z < 1){
-                    z = z + 48;
+                    z = z + 47;
                 }
                 codificado[i] = alfabeto[z];
                 break;

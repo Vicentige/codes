@@ -40,16 +40,14 @@ void lee_original(char *original, int *n){
         i++;
     }
 
-        for (i = 0; i < (strlen(original)); i++){
-        printf("%c", original[i]);
-    }
+    
 
     printf("Numero n: %d\n", *n);
 }
 
 void inicializa_alfabeto(char *alfabeto){
     int i, k = 0;   
-
+    alfabeto[0] = 'a';
     for (i = 1; i < 27; i++) { //obtiene el abecedario ingles, del alfabeto ACSII
         alfabeto[i] = 'A' + k;
         k++;
@@ -61,8 +59,6 @@ void inicializa_alfabeto(char *alfabeto){
         k++;
     }
 
-
-   //alfabeto[37] = '9'; //Agrega algunos simbolos al alfabeto
     alfabeto[38] = '!';
     alfabeto[39] = ',';
     alfabeto[40] = '.';
@@ -75,22 +71,52 @@ void inicializa_alfabeto(char *alfabeto){
     alfabeto[47] = '/';
     alfabeto[48] = '\0';
 
-
-    /*printf("\nAlfabeto:");
-    for (i = 0; i < 48; i++) { //Imprime el alfabeto
-        printf("%c", alfabeto[i]);
-    }*/
 }
 
 void codificar(char *original, char *codificado, char *alfabeto, int n){
     int i = 0, contador = 0;
     strcpy(codificado, original);
-    segunda_etapa(codificado, original, n);
     primera_etapa(codificado, original, n);
-
+    segunda_etapa(codificado, original, n);
 }
 //primera codificacion
+
+
+
 void primera_etapa(char *codificado, char *original, int n){
+    int i = 0, j, z, k = n, contador = 0;
+    char alfabeto[100];
+    inicializa_alfabeto(alfabeto);
+
+    while (original[i] >= '0' && original[i] <= '9'){ //Cuenta las posiciones que usa el numero n dentro del array
+        contador++;
+        i++;
+    }
+    if (n > 47) {
+        k = n % 47;        
+    }
+    
+    for (i = contador + 1; i < strlen(codificado); i++){
+        for (j = 1; j < 48; j ++){
+            if (original[i] == alfabeto[j]&& (j % 2 == 0)){
+                z = j + k;
+                if (z > 47){
+                    z = z - 47;
+                }
+                codificado[i] = alfabeto[z];
+                break;
+            }
+        }
+    }
+
+    printf("\nMensaje descodificado segunda vez: ");
+    for (i = 0; i < (strlen(codificado)); i++){
+        printf("%c", codificado[i]);
+    }
+    
+}
+
+void segunda_etapa(char *codificado, char *original, int n){//segunda codificacion
     int i = 0, j, z, k = n, contador = 0;
     char alfabeto[100];
     inicializa_alfabeto(alfabeto);
@@ -104,9 +130,9 @@ void primera_etapa(char *codificado, char *original, int n){
         
     for (i = contador + 1; i < strlen(original); i++){
         for (j = 1; j < (strlen(alfabeto)); j++){
-            if (codificado[i] == alfabeto[j] && (j % 2 == 0)){
+            if (codificado[i] == alfabeto[j]){
                 z = j + k;
-                if (z > 48) {
+                if (z > 47) {
                     z = z - 47;
                 }
                 codificado[i] = alfabeto[z];
@@ -118,38 +144,7 @@ void primera_etapa(char *codificado, char *original, int n){
     for (i = 0; i < (strlen(codificado)); i++){
         printf("%c", codificado[i]);
     }
-}
-
-void segunda_etapa(char *codificado, char *original, int n){//segunda codificacion
-    int i = 0, j, z, k = n, contador = 0;
-    char alfabeto[100];
-    inicializa_alfabeto(alfabeto);
-
-    while (original[i] >= '0' && original[i] <= '9'){ //Cuenta las posiciones que usa el numero n dentro del array
-        contador++;
-        i++;
-    }
-    if (n > 47) {
-        k = n % 47;        
-    }
     
-    for (i = contador + 1; i < strlen(codificado) + 2; i++){
-        for (j = 1; j < 49; j ++){
-            if (original[i] == alfabeto[j]){
-                z = j + k;
-                if (z > 48){
-                    z = z - 47;
-                }
-                codificado[i] = alfabeto[z];
-                break;
-            }
-        }
-    }
-
-    printf("\nMensaje descodificado segunda vez: ");
-    for (i = 0; i < (strlen(codificado)); i++){
-        printf("%c", codificado[i]);
-    }
 }
 
 void graba_mensaje(char *codificado){
@@ -160,3 +155,67 @@ void graba_mensaje(char *codificado){
     fputs(codificado, file);
     fclose(file);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
